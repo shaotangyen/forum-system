@@ -1,46 +1,27 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type Forum {
-    _id: ID
-    title: String
-    description: String
-    createdAt: String
-    userCount: Int
-    forumCategory: ForumCategory
-    posts: [Post]
-  }
-
-  type ForumCategory {
-    _id:ID
-    title: String
-  }
-
   type Post {
     _id: ID
     title: String
     content: String
     views: Int
     createdAt: String
-    user: User
     comments: [Comment]
   }
 
   type Comment {
     _id:ID
     content: String
-    createdAt: String
     user: User
+    createdAt: String
   }
 
   type User {
     _id: ID
     username: String
     email: String
-    passwordd: String
-    isAdmin: boolean
-    forums: [Forum]
-    posts: [Post]
+    posts: [Post]!
     comments: [Comment]
   }
 
@@ -53,17 +34,37 @@ const typeDefs = gql`
     users: [User]
     posts: [Post]
     comments: [Comment]
-    forums: [Forum]
+    me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addForum(title: String!): Forum
     addPost(PostId: ID!, title: String!, content: String!): Post
-    removeForum(forumId: ID!): Forum
-    removePost(PostId: ID!): Post
   }
 `;
+
+//query
+// type Forum {
+//   _id: ID
+//   title: String
+//   description: String
+//   createdAt: String
+//   userCount: Int
+//   forumCategory: ForumCategory
+//   posts: [Post]
+// }
+
+// type ForumCategory {
+//   _id:ID
+//   title: String
+// }
+
+//mutation
+// addComment(CommentId: ID!, content: String!): Comment
+// updatePost(PostId: ID!): Post
+// updateComment(CommentId: ID!): Comment
+// removePost(PostId: ID!): Post
+// removeComment(CommentId: ID!): Comment
 
 module.exports = typeDefs;

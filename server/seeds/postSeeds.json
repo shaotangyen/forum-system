@@ -1,43 +1,50 @@
-// beed to update post seeds
 [
   {
-    "thoughtText": "Everyone knows that debugging is twice as hard as writing a program in the first place. So if you're as clever as you can be when you write it, how will you ever debug it?",
-    "thoughtAuthor": "Brian Kernighan"
+    "content": "Tonight was an amazing night. I played video games with my girl friend and had a good dinner.",
+    "user": "Shao Yen"
   },
   {
-    "thoughtText": "Some of the best programming is done on paper, really. Putting it into the computer is just a minor detail.",
-    "thoughtAuthor": "Max Kanat-Alexander"
+    "content": "I need some help with photography. Can anyone help please?",
+    "user": "alphatron"
   },
   {
-    "thoughtText": "When you don't create things, you become defined by your tastes rather than ability. Your tastes only narrow & exclude people. So create.",
-    "thoughtAuthor": "Why The Lucky Stiff"
+    "content": "Everyone knows that debugging is twice as hard as writing a program in the first place. So if you're as clever as you can be when you write it, how will you ever debug it?",
+    "user": "Brian Kernighan"
   },
   {
-    "thoughtText": "I'm not a great programmer; I'm just a good programmer with great habits.",
-    "thoughtAuthor": "Kent Beck"
+    "content": "Some of the best programming is done on paper, really. Putting it into the computer is just a minor detail.",
+    "user": "Max Kanat-Alexander"
   },
   {
-    "thoughtText": "Walking on water and developing software from a specification are easy if both are frozen.",
-    "thoughtAuthor": "Edward V. Berard"
+    "content": "When you don't create things, you become defined by your tastes rather than ability. Your tastes only narrow & exclude people. So create.",
+    "user": "Why The Lucky Stiff"
   },
   {
-    "thoughtText": "The most disastrous thing that you can ever learn is your first programming language.",
-    "thoughtAuthor": "Alan Kay"
+    "content": "I'm not a great programmer; I'm just a good programmer with great habits.",
+    "user": "Kent Beck"
   },
   {
-    "thoughtText": "The most important property of a program is whether it accomplishes the intention of its user.",
-    "thoughtAuthor": "C.A.R. Hoare"
+    "content": "Walking on water and developing software from a specification are easy if both are frozen.",
+    "user": "Edward V. Berard"
   },
   {
-    "thoughtText": "Delivering good software today is often better than perfect software tomorrow, so finish things and ship.",
-    "thoughtAuthor": "David Thomas"
+    "content": "The most disastrous thing that you can ever learn is your first programming language.",
+    "user": "Alan Kay"
   },
   {
-    "thoughtText": "If you optimize everything, you will always be unhappy.",
-    "thoughtAuthor": "Donald Knuth"
+    "content": "The most important property of a program is whether it accomplishes the intention of its user.",
+    "user": "C.A.R. Hoare"
   },
   {
-    "thoughtText": "It's not a bug; it's an undocumented feature.",
-    "thoughtAuthor": "Lernantino"
+    "content": "Delivering good software today is often better than perfect software tomorrow, so finish things and ship.",
+    "user": "David Thomas"
+  },
+  {
+    "content": "If you optimize everything, you will always be unhappy.",
+    "user": "Donald Knuth"
+  },
+  {
+    "content": "It's not a bug; it's an undocumented feature.",
+    "user": "Lernantino"
   }
 ]

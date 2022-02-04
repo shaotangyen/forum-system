@@ -1,5 +1,15 @@
 [
   {
+    "username": "Shao Yen",
+    "email": "shao@gmail.com",
+    "password": "PassWord01"
+  },
+  {
+    "username": "alphatron",
+    "email": "alpha@gmail.com",
+    "password": "PassWord02"
+  },
+  {
     "username": "Brian Kernighan",
     "email": "bkernighan@techfriends.dev",
     "password": "password01"

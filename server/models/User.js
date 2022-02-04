@@ -20,26 +20,26 @@ const userSchema = new Schema({
         minlength: 4,
     },
     //A User has many forums
-    Forums: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Forum',
-        },
-    ],
+    // Forums: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: 'Forum',
+    //     },
+    // ],
     //A User has many posts
-    Posts: [
+    posts: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Post',
         },
     ],
     //A User has many comments
-    Comments: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Comment',
-        },
-    ],
+    // comments: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: 'Comment',
+    //     },
+    // ],
 });
 
 userSchema.pre('save', async function (next) {
@@ -47,7 +47,6 @@ userSchema.pre('save', async function (next) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
     }
-
     next();
 });
 
