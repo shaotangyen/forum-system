@@ -13,6 +13,11 @@ const postSchema = new Schema({
     required: true,
     trim: true,
   },
+  user: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   views: {
     type: Number,
   },

@@ -5,6 +5,7 @@ const typeDefs = gql`
     _id: ID
     title: String
     content: String
+    user: String
     views: Int
     createdAt: String
     comments: [Comment]

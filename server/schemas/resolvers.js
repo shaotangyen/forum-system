@@ -5,9 +5,10 @@ const resolvers = {
     users: async () => { 
       return User.find({}).populate('posts');
     },
-    posts: async (parent, { username }) => { 
-      const params = username ? { username } : {};
-      return Post.find({params});
+    posts: async () => { 
+      // const params = user ? { user } : {};
+      // return Post.find({params}).sort({ createdAt: -1 });
+      return Post.find({}).populate('comments');
     },
     me: async (parent, args, context) => {
       if (context.user) {
