@@ -14,7 +14,7 @@ const typeDefs = gql`
   type Comment {
     _id:ID
     content: String
-    user: User
+    user: String
     createdAt: String
   }
 
@@ -22,8 +22,7 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    posts: [Post]!
-    comments: [Comment]
+    posts: [Post]
   }
 
   type Auth {
@@ -34,38 +33,22 @@ const typeDefs = gql`
   type Query {
     users: [User]
     posts: [Post]
-    comments: [Comment]
+    post(postId: ID!): Post
     me: User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addPost(PostId: ID!, title: String!, content: String!): Post
+    addPost(title: String!, content: String!): Post
+    updatePost(postId: ID!, title: String!, content: String!): Post
+    removePost(postId: ID!): Post
   }
 `;
 
-//query
-// type Forum {
-//   _id: ID
-//   title: String
-//   description: String
-//   createdAt: String
-//   userCount: Int
-//   forumCategory: ForumCategory
-//   posts: [Post]
-// }
-
-// type ForumCategory {
-//   _id:ID
-//   title: String
-// }
-
-//mutation
+// To add
 // addComment(CommentId: ID!, content: String!): Comment
-// updatePost(PostId: ID!): Post
 // updateComment(CommentId: ID!): Comment
-// removePost(PostId: ID!): Post
 // removeComment(CommentId: ID!): Comment
 
 module.exports = typeDefs;

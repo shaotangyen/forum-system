@@ -19,13 +19,6 @@ const userSchema = new Schema({
         required: true,
         minlength: 4,
     },
-    //A User has many forums
-    // Forums: [
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         ref: 'Forum',
-    //     },
-    // ],
     //A User has many posts
     posts: [
         {
@@ -33,13 +26,6 @@ const userSchema = new Schema({
             ref: 'Post',
         },
     ],
-    //A User has many comments
-    // comments: [
-    //     {
-    //         type: Schema.Types.ObjectId,
-    //         ref: 'Comment',
-    //     },
-    // ],
 });
 
 userSchema.pre('save', async function (next) {

@@ -2,10 +2,10 @@ const { User, Post } = require('../models');
 
 const resolvers = {
   Query: {
-    users: async () => { 
+    users: async () => {
       return User.find({}).populate('posts');
     },
-    posts: async () => { 
+    posts: async () => {
       // const params = user ? { user } : {};
       // return Post.find({params}).sort({ createdAt: -1 });
       return Post.find({}).populate('comments');
@@ -37,10 +37,11 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    //to do
-    addPost: async (parent, { content }, context) => {
+    //Adding a new post to the database, and to its user
+    addPost: async (parent, { title, content }, context) => {
       if (context.user) {
         const post = await Post.create({
+          title,
           content,
           user: context.user.username,
         });
@@ -54,9 +55,48 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    //create
-    //update
-    //remove
+    //Updating a post to the database, and to its user
+    updatePost: async (parent, { postId, title, content }, context) => {
+      //to check if this works
+      //need to find postId first then do the update
+      //to do
+      if (context.user) {
+        const post = await Post.create({
+          title,
+          content,
+          user: context.user.username,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { posts: post._id } }
+        );
+
+        return post;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    //Removing a post from the database, and from its user
+    removePost: async (parent, { postId }, context) => {
+      if (context.user) {
+        const post = await Post.findOneAndDelete({
+          _id: postId,
+          user: context.user.username,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { thoughts: post._id } }
+        );
+
+        return post;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+      // return Post.findOneAndDelete({ _id: postId });
+    },
+    //addComment
+    //updateComment
+    //removeComment
   }
 };
 
