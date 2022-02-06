@@ -23,5 +23,6 @@
   "homepage": "https://github.com/shaotangyen/forum-system#readme",
   "devDependencies": {
     "concurrently": "^7.0.0"
-  }
+  },
+  "dependencies": {}
 }
