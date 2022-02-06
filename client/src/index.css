@@ -33,6 +33,15 @@ h6 {
   margin: 16px 0 16px 24px;
 }
 
-.no-order{
-  order:unset;
+.list-item-tyle{
+  padding: 0px 10px;
+}
+
+.space-before-author{
+  padding-top: 20px;
+  /* padding-left: 30px; */
+}
+
+.primary-color{
+  color:#001529;
 }

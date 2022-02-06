@@ -2,18 +2,17 @@ import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import Blog from './pages/Blog';
-// import SinglePost from './pages/SinglePost';
-// import Profile from './pages/Profile';
+import Posts from './pages/Posts';
+import SinglePost from './pages/SinglePost';
 import Navig from './components/Navig';
-// import Footer from './components/Footer';
+import Profile from './pages/Profile';
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -45,13 +44,9 @@ function App() {
       <Router>
         <Layout className="layout">
           <Navig />
+
           <Route exact path="/">
             <Home />
-          </Route>
-          <Route exact path="/blog">
-            <Content style={{ padding: '0 50px' }}>
-              <Blog />
-            </Content>
           </Route>
           <Route exact path="/login">
             <Login />
@@ -59,6 +54,27 @@ function App() {
           <Route exact path="/signup">
             <Signup />
           </Route>
+          <Route exact path="/profile/me">
+            <Content style={{ padding: '0 50px' }}>
+              <Profile />
+            </Content>
+          </Route>
+          <Route exact path="/profile/:username">
+            <Content style={{ padding: '0 50px' }}>
+              <Profile />
+            </Content>
+          </Route>
+          <Route exact path="/posts">
+            <Content style={{ padding: '0 50px' }}>
+              <Posts />
+            </Content>
+          </Route>
+          <Route exact path="/posts/:postId">
+            <Content style={{ padding: '0 50px' }}>
+              <SinglePost />
+            </Content>
+          </Route>
+
           <Footer style={{ textAlign: 'center' }}>Shao Studio [SS] ©2022 Created by Shao</Footer>
         </Layout>
 
@@ -76,9 +92,7 @@ function App() {
             <Route exact path="/profiles/:username">
               <Profile />
             </Route>
-            <Route exact path="/thoughts/:thoughtId">
-              <SinglePost />
-            </Route> */}
+             */}
 
       </Router>
     </ApolloProvider>
