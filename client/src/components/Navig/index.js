@@ -5,11 +5,15 @@ import Auth from '../../utils/auth';
 
 const { Header } = Layout;
 
-const Navig = () => {
+//export const updateMenuItem = (item) => setItemSelected(item);
 
+
+
+const Navig = () => {
+  
   //set menu item selected to change the style
   const [itemSelected, setItemSelected] = useState();
-
+  
   const handleClick = (e) => {
     setItemSelected(e.key);
   }
@@ -34,7 +38,7 @@ const Navig = () => {
         ) : (
           <>
             <Menu.Item key="login"><Link to="/login"> Login</Link></Menu.Item>
-            <Menu.Item key="signup"><Link to="/signup">Signup</Link></Menu.Item>
+            {/* <Menu.Item key="signup"><Link to="/signup">Signup</Link></Menu.Item> */}
           </>
         )}
       </Menu>

@@ -11,7 +11,8 @@ import { Form, Input, Button, Alert, Space, Row, Radio } from 'antd';
 import JoditEditor from "jodit-react";
 
 
-const PostForm = () => {
+const UpdateForm = (props) => {
+  console.log(props);
   const [form] = Form.useForm();
 
   /* eslint-disable no-template-curly-in-string */
@@ -19,6 +20,7 @@ const PostForm = () => {
     required: '${label} is required!'
   };
 
+  //TODO: Need to update to updatePost
   const [addPost, { error }] = useMutation(ADD_POST, {
     update(cache, { data: { addPost } }) {
       try {
@@ -32,15 +34,10 @@ const PostForm = () => {
         console.error(e);
       }
 
-      // update me object's cache
-      // const { me } = cache.readQuery({ query: QUERY_ME });
-      // cache.writeQuery({
-      //   query: QUERY_ME,
-      //   data: { me: { ...me, posts: [...me.posts, addPost] } },
-      // });
     },
   });
 
+  //TODO: Need to update to updatePost
   const handleFormSubmit = async ({ titleItem, contentItem }) => {
     try {
       await addPost({
@@ -61,8 +58,9 @@ const PostForm = () => {
     <div>
       {Auth.loggedIn() ? (
         <>
-          <h3>Create post</h3>
+          <h3>Update post</h3>
 
+          {/* TODO: Need to update all form fields with post data*/}
           <Form
             form={form}
             layout='vertical'
@@ -116,4 +114,4 @@ const PostForm = () => {
   );
 };
 
-export default PostForm;
+export default UpdateForm;

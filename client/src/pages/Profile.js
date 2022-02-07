@@ -6,17 +6,20 @@ import PostForm from '../components/PostForm';
 import PostList from '../components/PostList';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
-import { Spin as Loading, Breadcrumb } from 'antd';
+import { Spin as Loading, Breadcrumb, Alert } from 'antd';
 
 import Auth from '../utils/auth';
 
 const Profile = () => {
-    const { username: userParam } = useParams();
+    const { userParam } = useParams();
+    console.log("userParam",userParam);
 
     const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
         variables: { username: userParam },
     });
+
     console.log(loading, data);
+    
     const user = data?.me || data?.user || {};
     // redirect to personal profile page if username is yours
     if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
@@ -32,31 +35,31 @@ const Profile = () => {
     //Why is this executed many times when loading the page
     if (!user?.username) {
         return (
-            <h4>
-                You need to be logged in to see this.
-            </h4>
+            <Alert message="You need to be logged in to see this." type='error'></Alert>
         );
     }
 
     return (
-        <div>
-            <div className="flex-row justify-center mb-3">
-                <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-                    Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-                </h2>
-
-                <div className="col-12 col-md-10 mb-5">
-                    <PostList
-              posts={user.posts}
-            />
-                </div>
+        <main>
+            <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Profile</Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="site-layout-content">
                 {!userParam && (
                     <div>
                         <PostForm />
                     </div>
                 )}
+                    {loading ? (
+                        <div style={{ textAlign: 'center' }}><Loading /></div>
+                    ) : (
+                        <div>
+                            <PostList posts={user.posts} />
+                        </div>
+                    )}
             </div>
-        </div>
+
+        </main>
     );
 };
 

@@ -15,15 +15,16 @@ const Posts = () => {
         <main>
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Posts</Breadcrumb.Item>
-                {/* <Breadcrumb.Item>{posts ? (data.title) : ('')}</Breadcrumb.Item> */}
             </Breadcrumb>
             <div className="site-layout-content">
-                <PostForm />
+                <div className=''>
+                    <PostForm />
+                </div>
                 <div>
                     {loading ? (
                         <div style={{ textAlign: 'center' }}><Loading /></div>
                     ) : (
-                        <PostList posts={posts}/>
+                        <PostList posts={posts} />
                     )}
                 </div>
             </div>

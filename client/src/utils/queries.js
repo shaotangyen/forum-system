@@ -29,8 +29,8 @@ export const QUERY_POSTS = gql`
 `;
 
 export const QUERY_SINGLE_POST = gql`
-  query getSinglePost($postId: ID!) {
-    post(postId: $postId) {
+  query getSinglePost($_id: ID!) {
+    post(_id: $_id) {
       _id
       title
       content

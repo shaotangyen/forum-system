@@ -45,3 +45,22 @@ h6 {
 .primary-color{
   color:#001529;
 }
+
+.warning{
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+.post-form{
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.content-padding{
+  padding: 0 50px;
+}
+
+.login-form{
+  max-width: 600px;
+}

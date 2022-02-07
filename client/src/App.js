@@ -5,12 +5,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 
 import Home from './pages/Home';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import Posts from './pages/Posts';
-import SinglePost from './pages/SinglePost';
 import Navig from './components/Navig';
+import Posts from './pages/Posts';
 import Profile from './pages/Profile';
+import SinglePost from './pages/SinglePost';
+import SinglePostUpdate from './pages/SinglePostUpdate';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 const { Content, Footer } = Layout;
 
@@ -49,29 +50,38 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/login">
-            <Login />
+            <Content className='content-padding'>
+              <Login />
+            </Content>
           </Route>
           <Route exact path="/signup">
-            <Signup />
+            <Content className='content-padding'>
+              <Signup />
+            </Content>
           </Route>
           <Route exact path="/profile/me">
-            <Content style={{ padding: '0 50px' }}>
+            <Content className='content-padding'>
               <Profile />
             </Content>
           </Route>
-          <Route exact path="/profile/:username">
-            <Content style={{ padding: '0 50px' }}>
+          <Route exact path="/profile/:user">
+            <Content className='content-padding'>
               <Profile />
             </Content>
           </Route>
           <Route exact path="/posts">
-            <Content style={{ padding: '0 50px' }}>
+            <Content className='content-padding'>
               <Posts />
             </Content>
           </Route>
           <Route exact path="/posts/:postId">
-            <Content style={{ padding: '0 50px' }}>
+            <Content className='content-padding'>
               <SinglePost />
+            </Content>
+          </Route>
+          <Route exact path="/posts/:postId/edit">
+            <Content className='content-padding'>
+              <SinglePostUpdate />
             </Content>
           </Route>
 

@@ -13,7 +13,7 @@ const SinglePost = () => {
   const { postId } = useParams();
   const { loading, data } = useQuery(QUERY_SINGLE_POST, {
     // pass URL parameter
-    variables: { postId: postId },
+    variables: { _id: postId },
   });
 
   const post = data?.post || {};
@@ -23,6 +23,11 @@ const SinglePost = () => {
       <Loading />
     </div>;
   }
+
+  const getContent = () => {
+    return { __html: post.content };
+  }
+
   return (
     <main>
       <Breadcrumb style={{ margin: '16px 0' }}>
@@ -34,9 +39,12 @@ const SinglePost = () => {
       <div className="site-layout-content">
         <Title level={2}>{post.title}</Title>
         <Divider />
-        <Paragraph>{post.content}</Paragraph>
+        <Paragraph>
+          {/* React's way to use innerHTML */}
+          <div dangerouslySetInnerHTML={getContent()} />
+        </Paragraph>
         <Paragraph className='space-before-author'>
-        <Text strong>{post.user}</Text> <Text type="secondary">{post.createdAt}</Text>
+          <Text strong>{post.user}</Text> <Text type="secondary">{post.createdAt}</Text>
         </Paragraph>
       </div>
 

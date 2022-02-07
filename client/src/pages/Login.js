@@ -1,93 +1,100 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
+import { Form, Input, Button, Checkbox, Breadcrumb, Row, Col, Alert, Space } from 'antd';
+import { MailOutlined, LockOutlined } from '@ant-design/icons';
+
 const Login = (props) => {
-    const [formState, setFormState] = useState({ email: '', password: '' });
     const [login, { error, data }] = useMutation(LOGIN_USER);
 
-    // update state based on form input changes
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
-    };
-
     // submit form
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        console.log(formState);
+    const handleFormSubmit = async ({ emailItem, passwordItem }) => {
         try {
             const { data } = await login({
-                variables: { ...formState },
+                variables: {
+                    email: emailItem,
+                    password: passwordItem,
+                },
             });
 
             Auth.login(data.login.token);
-        } catch (e) {
-            console.error(e);
+        } catch (err) {
+            console.error(err);
         }
-
-        // clear form values
-        setFormState({
-            email: '',
-            password: '',
-        });
     };
 
 
     return (
-        <div className="site-layout-content">
-            <div className="col-12 col-lg-5">
-                <div className="card">
-                    <h4 className="card-header bg-dark text-light p-2">Login</h4>
-                    <div className="card-body">
+        <main>
+            <Row>
+                <Col xs={2} sm={4} md={6} lg={8} xl={9}></Col>
+                <Col xs={20} sm={16} md={12} lg={8} xl={6}>
+                    <Breadcrumb style={{ margin: '16px 0' }}>
+                        <Breadcrumb.Item>Log in</Breadcrumb.Item>
+                    </Breadcrumb>
+                    <div className="site-layout-content">
                         {data ? (
                             <p>
                                 Heading back to <Link to="/">the homepage.</Link>
                             </p>
                         ) : (
-                            <form onSubmit={handleFormSubmit}>
-                                <input
-                                    className="form-input"
-                                    placeholder="Your email"
-                                    name="email"
-                                    type="email"
-                                    value={formState.email}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    className="form-input"
-                                    placeholder="******"
-                                    name="password"
-                                    type="password"
-                                    value={formState.password}
-                                    onChange={handleChange}
-                                />
-                                <button
-                                    className="btn btn-block btn-primary"
-                                    style={{ cursor: 'pointer' }}
-                                    type="submit"
+                            <Form
+                                name="normal_login"
+                                className="login-form"
+                                initialValues={{ remember: true }}
+                                onFinish={handleFormSubmit}
+                            >
+                                <Form.Item
+                                    name="emailItem"
+                                    rules={[{ required: true, message: 'Please input your email!' }]}
                                 >
-                                    Submit
-                                </button>
-                            </form>
-                        )}
+                                    <Input
+                                        prefix={<MailOutlined className="site-form-item-icon" />}
+                                        type="email"
+                                        placeholder="Email"
+                                    />
+                                </Form.Item>
+                                <Form.Item
+                                    name="passwordItem"
+                                    rules={[{ required: true, message: 'Please input your password!' }]}
+                                >
+                                    <Input
+                                        prefix={<LockOutlined className="site-form-item-icon" />}
+                                        type="password"
+                                        placeholder="Password"
+                                    />
+                                </Form.Item>
+                                <Form.Item>
+                                    <Space>
+                                        <Form.Item name="remember" valuePropName="checked" noStyle>
+                                            <Checkbox>Remember me</Checkbox>
+                                        </Form.Item>
+                                        <Link to="/Login">Forgot password</Link>
+                                    </Space>
+                                </Form.Item>
 
+                                <Form.Item>
+                                    <Space>
+                                        <Button type="primary" htmlType="submit" className="login-form-button">
+                                            Log in
+                                        </Button>
+                                        or <Link to="/signup">Sign up now!</Link>
+                                    </Space>
+                                </Form.Item>
+                            </Form>
+                        )}
                         {error && (
-                            <div className="my-3 p-3 bg-danger text-white">
-                                {error.message}
-                            </div>
+                            <Alert message={error.message} type="error" />
                         )}
                     </div>
-                </div>
-            </div>
-        </div>
+                </Col>
+                <Col xs={2} sm={4} md={6} lg={8} xl={9}></Col>
+            </Row>
+        </main>
     );
 };
 
