@@ -5,10 +5,6 @@ import Auth from '../../utils/auth';
 
 const { Header } = Layout;
 
-//export const updateMenuItem = (item) => setItemSelected(item);
-
-
-
 const Navig = () => {
   
   //set menu item selected to change the style
@@ -16,6 +12,10 @@ const Navig = () => {
   
   const handleClick = (e) => {
     setItemSelected(e.key);
+  }
+
+  const setItem = (v) => { 
+    setItemSelected(v);
   }
 
   const logout = (event) => {

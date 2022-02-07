@@ -3,16 +3,15 @@ import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 
-import { Typography, List, Button } from 'antd';
+import { Typography, List, Space, Avatar } from 'antd';
 import { UPDATE_POST, REMOVE_POST } from '../../utils/mutations';
-import { QUERY_USER } from '../../utils/queries';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+
+import { getTextFromHtml } from "../../utils/plaintextConvert.js";
 
 const { Text, Title } = Typography;
 
 const PostList = ({ posts }) => {
   const [removePost] = useMutation(REMOVE_POST, {
-    // refetchQueries: [{ query: QUERY_USER}],
   });
 
   const [updatePost] = useMutation(UPDATE_POST);
@@ -24,42 +23,32 @@ const PostList = ({ posts }) => {
     }
 
     const postId = event.target.value;
-    console.log(event.target);
-    console.log(event.target.value);
 
     try {
-      //Need to update cache?
-      // https://hasura.io/learn/graphql/typescript-react-apollo/optimistic-update-mutations/3.1-mutation-update-cache/
-      const mutationResponse = await removePost({
-        variables: { _id: postId },
-        // optimisticResponse: true,
-        // update: (cache) => {
-        //   const existingPost = cache.readQuery({ query: QUERY_POSTS });
-        //   const newPost = existingPost.filter(t => (t.id !== todo.id));
-        //   cache.writeQuery({
-        //     query: GET_MY_TODOS,
-        //     data: { todos: newPost }
-        //   });
-        // }
+      await removePost({
+        variables: { postId: postId },
       });
-      console.log('delete done');
+      // console.log('delete done');
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
   }
 
   const handleUpdatePost = async (event) => {
-    console.log(event.target);
-    console.log(event.target.value);
     const postId = event.target.value;
-
     //Redirect to the edit page
-
-
   }
 
   if (!posts.length) {
-    return <h3>No Posts Yet</h3>;
+    return <h4>You do not have any posts so far. <Link to="/posts">Make one</Link> now.</h4>;
+  }
+
+  const getContent = (str) => {
+    //get plain text from the html content and get the first 10 words out of it
+    const firstTen = getTextFromHtml(str).split(' ').slice(0, 10).join(' ') + "  ...";
+
+    return { __html: `${firstTen}` };
   }
 
   return (
@@ -69,23 +58,35 @@ const PostList = ({ posts }) => {
         itemLayout="horizontal"
         dataSource={posts}
         renderItem={item => (
-          <List.Item actions={
-            Auth.loggedIn() && (Auth.getProfile().data.username === item.user) &&
-            ([
-              //to do: edit/update post, delete still not working
-              <Button onClick={handleUpdatePost} value={item._id}>edit</Button>,
-              <Button onClick={handleDeletePost} value={item._id}>delete</Button>
-            ])
-          }>
-            <List.Item.Meta
-              title={<Link to={`/posts/${item._id}`}><Title level={5}>{item.title}</Title></Link>}
+          <List.Item className="list-item">
+            <List.Item.Meta className="list-meta"
+              // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              title={
+                <div className="list-title">
+                  <Link to={`/posts/${item._id}`}><Title level={5}>{item.title}</Title></Link>
+                </div>
+              }
+              description={
+                <div className="list-desc">
+                  <span dangerouslySetInnerHTML={getContent(item.content)} />
+                  <Link
+                    className="ant-typography ant-typography-secondary"
+                    to={`/posts/${item._id}`}>
+                    Read more
+                  </Link>
+                </div>
+              }
             />
-            {/* <Link to={`/profile/${item.user}`}> */}
-              <Text className='list-item-tyle' type="secondary">
-                {item.user}
-              </Text>
-            {/* </Link> */}
-            <Text className='list-item-tyle' type="secondary">{item.createdAt}</Text>
+            <div className="list-tool">
+              {Auth.loggedIn() &&
+                (Auth.getProfile().data.username === item.user) && <div className="list-edit">
+                  <button className='ant-btn ant-btn-link' onClick={handleUpdatePost} value={item._id}>edit</button></div>}
+              {Auth.loggedIn() &&
+                (Auth.getProfile().data.username === item.user) && <div className="list-delete">
+                  <button className='ant-btn ant-btn-text ant-btn-dangerous' onClick={handleDeletePost} value={item._id}>delete</button></div>}
+              <div className="list-user"><Text type="secondary">{item.user}</Text></div>
+              <div className="list-date"><Text type="secondary">{item.createdAt}</Text></div>
+            </div>
           </List.Item>
         )}
       />
@@ -95,7 +96,3 @@ const PostList = ({ posts }) => {
 };
 
 export default PostList;
-
-// if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-//   return <Redirect to="/profile/me" />;
-// }

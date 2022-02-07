@@ -39,7 +39,6 @@ h6 {
 
 .space-before-author{
   padding-top: 20px;
-  /* padding-left: 30px; */
 }
 
 .primary-color{
@@ -63,4 +62,59 @@ h6 {
 
 .login-form{
   max-width: 600px;
+}
+
+/* post list styling */
+.list-meta{
+  padding-right: 20px;
+}
+
+.list-tool{
+    display: flex;
+    flex-direction: row;
+
+}
+.list-user{
+  padding:0px 5px;
+}
+
+.list-date{
+  padding:0px 5px;
+}
+
+/* mobile responsive: tablet */
+
+@media screen and (max-width: 768px){
+  .list-item{
+    flex-direction: column; 
+    flex-wrap:wrap;
+    text-align: left;
+  }
+
+  .list-meta{
+    width: 700px;
+  }
+
+  .list-title{
+    max-width: 700px;
+  }
+  
+  .list-desc{
+    max-width: 700px;
+  }
+  
+  .list-tool{
+    justify-content:flex-start;
+  }
+
+}
+
+/* mobile responsive: mobile (small) */
+
+@media screen and (max-width: 375px){
+
+  .list-tool{
+    flex-wrap: wrap;
+  }
+
 }

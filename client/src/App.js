@@ -64,11 +64,6 @@ function App() {
               <Profile />
             </Content>
           </Route>
-          <Route exact path="/profile/:user">
-            <Content className='content-padding'>
-              <Profile />
-            </Content>
-          </Route>
           <Route exact path="/posts">
             <Content className='content-padding'>
               <Posts />

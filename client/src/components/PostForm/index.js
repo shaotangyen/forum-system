@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
@@ -18,6 +18,11 @@ const PostForm = () => {
   const validateMessages = {
     required: '${label} is required!'
   };
+
+  const editor = useRef(null);
+  const [content, setContent] = useState('');
+  console.log(content);
+  //for editor, all options from https://xdsoft.net/jodit/doc/
 
   const [addPost, { error }] = useMutation(ADD_POST, {
     update(cache, { data: { addPost } }) {
@@ -75,7 +80,12 @@ const PostForm = () => {
             </Form.Item>
             <Form.Item name="contentItem" label="Content" rules={[{ required: true }]}>
               {/* <Input.TextArea /> */}
-              <JoditEditor />
+              <JoditEditor
+                ref={editor}
+                value={content}
+                tabIndex={1} // tabIndex of textarea
+                onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+              />
             </Form.Item>
             <Form.Item>
               <Row justify='end'>

@@ -11,20 +11,13 @@ import { Spin as Loading, Breadcrumb, Alert } from 'antd';
 import Auth from '../utils/auth';
 
 const Profile = () => {
-    const { userParam } = useParams();
-    console.log("userParam",userParam);
+    // const { userParam } = useParams();
 
-    const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-        variables: { username: userParam },
-    });
+    const { loading, data } = useQuery(QUERY_ME);
 
-    console.log(loading, data);
+    // console.log(loading, data);
     
     const user = data?.me || data?.user || {};
-    // redirect to personal profile page if username is yours
-    if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-        return <Redirect to="/profile/me" />;
-    }
 
     if (loading) {
         return <div style={{ textAlign: 'center' }}>
@@ -45,11 +38,6 @@ const Profile = () => {
                 <Breadcrumb.Item>Profile</Breadcrumb.Item>
             </Breadcrumb>
             <div className="site-layout-content">
-                {!userParam && (
-                    <div>
-                        <PostForm />
-                    </div>
-                )}
                     {loading ? (
                         <div style={{ textAlign: 'center' }}><Loading /></div>
                     ) : (
