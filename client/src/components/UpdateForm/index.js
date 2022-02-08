@@ -1,54 +1,63 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import React, { useState, useRef } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
 
-import { ADD_POST } from '../../utils/mutations';
-import { QUERY_POSTS } from '../../utils/queries';
+import { UPDATE_POST } from '../../utils/mutations';
+import { QUERY_POSTS, QUERY_SINGLE_POST } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
-import { Form, Input, Button, Alert, Space, Row, Radio } from 'antd';
+import { Form, Input, Button, Alert, Space, Row, Radio, Spin as Loading } from 'antd';
 
 import JoditEditor from "jodit-react";
 
 
 const UpdateForm = (props) => {
-  console.log(props);
+  const { postId } = useParams();
+  // console.log(postId); Got the post ID
+  const { loading, data } = useQuery(QUERY_SINGLE_POST, {
+    variables: { _id: postId },
+  });
+
+  const post = data?.post || {};
+
   const [form] = Form.useForm();
+
+  const editor = useRef(null);
+  console.log("post.title", post.title); //Wwrks
+  console.log("post.content", post.content); //works
+
+  const [content, setContent] = useState(post.content);
+  // console.log("content",content); For some reason not working
+
+  const config = {
+    readonly: false // all options from https://xdsoft.net/jodit/doc/
+  };
 
   /* eslint-disable no-template-curly-in-string */
   const validateMessages = {
     required: '${label} is required!'
   };
 
-  //TODO: Need to update to updatePost
-  const [addPost, { error }] = useMutation(ADD_POST, {
-    update(cache, { data: { addPost } }) {
-      try {
-        const { posts } = cache.readQuery({ query: QUERY_POSTS });
+  const [updatePost] = useMutation(UPDATE_POST);
 
-        cache.writeQuery({
-          query: QUERY_POSTS,
-          data: { posts: [addPost, ...posts] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
+  if (loading) {
+    return <div style={{ textAlign: 'center' }}><Loading /></div>;
+  }
 
-    },
-  });
-
-  //TODO: Need to update to updatePost
   const handleFormSubmit = async ({ titleItem, contentItem }) => {
+    console.log(titleItem);
+    console.log(contentItem);
     try {
-      await addPost({
+      await updatePost({
         variables: {
+          postId: postId,
           title: titleItem,
           content: contentItem,
-          user: Auth.getProfile().data.username,
         },
       });
-      //reset all fields in the form
-      form.resetFields();
+      // not sure what's the react way to redirect to a different link
+      //using window.location for now
+      window.location.href = "/posts/"+postId;
     } catch (err) {
       console.error(err);
     }
@@ -69,15 +78,24 @@ const UpdateForm = (props) => {
             validateMessages={validateMessages}
           >
             <Form.Item name="titleItem" label="Title" rules={[{ required: true }]}>
-              <Input />
+              <Input
+                defaultValue={post.title}
+              />
             </Form.Item>
             <Form.Item name="contentItem" label="Content" rules={[{ required: true }]}>
               {/* <Input.TextArea /> */}
-              <JoditEditor />
+              <JoditEditor
+                ref={editor}
+                value={content} //Not working for some reason
+                config={config}
+                tabIndex={1} // tabIndex of textarea
+                // onBlur={newContent => setContent(newContent)}
+                // onChange={setContent}
+              />
             </Form.Item>
             <Form.Item>
               <Row justify='end'>
-                <Radio.Group>
+                <Radio.Group value="public">
                   <Radio value="private">Private</Radio>
                   <Radio value="public">Public</Radio>
                 </Radio.Group>
@@ -85,7 +103,15 @@ const UpdateForm = (props) => {
             </Form.Item>
             <Form.Item>
               <Row justify='end'>
-                <Button type="primary" htmlType="submit">Create Post</Button>
+                <Space>
+                  <Button type="secondary" htmlType="submit">
+                    {/* Shuold go to the previous page */}
+                  <Link to={`/posts/`}>Cancel</Link>
+                  </Button>
+                  <Button type="primary" htmlType="submit">
+                    Update Post
+                  </Button>
+                </Space>
               </Row>
             </Form.Item>
           </Form>
@@ -93,7 +119,7 @@ const UpdateForm = (props) => {
       ) : (
         <div className='warning'>
           <Alert
-            message="You need to be logged in to make a post."
+            message="You need to be logged in to update your post."
             type="warning"
             showIcon
             action={

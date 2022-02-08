@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 
@@ -35,8 +35,11 @@ const PostList = ({ posts }) => {
   }
 
   const handleUpdatePost = async (event) => {
-    const postId = event.target.value;
+    const post = event.target.value;
+    console.log(post);
     //Redirect to the edit page
+    <Redirect to="/posts/:postId/edit"></Redirect>
+    console.log("done?");
   }
 
   if (!posts.length) {
@@ -79,7 +82,9 @@ const PostList = ({ posts }) => {
             <div className="list-tool">
               {Auth.loggedIn() &&
                 (Auth.getProfile().data.username === item.user) && <div className="list-edit">
-                  <button className='ant-btn ant-btn-link' onClick={handleUpdatePost} value={item._id}>edit</button></div>}
+                  {/* <button className='ant-btn ant-btn-link' value={item._id} href={"/somewhere"}>edit</button> */}
+                   <Link className='ant-btn ant-btn-link' to={`/posts/${item._id}/edit`}>edit</Link>
+                </div>}
               {Auth.loggedIn() &&
                 (Auth.getProfile().data.username === item.user) && <div className="list-delete">
                   <button className='ant-btn ant-btn-text ant-btn-dangerous' onClick={handleDeletePost} value={item._id}>delete</button></div>}

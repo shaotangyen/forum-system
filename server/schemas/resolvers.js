@@ -15,6 +15,7 @@ const resolvers = {
       return Post.find(params).sort({ createdAt: -1 });
     },
     post: async (parent, { _id }) => {
+      console.log("id",_id);
       return Post.findOne({ _id: _id });
     },
 

@@ -24,5 +24,7 @@
   "devDependencies": {
     "concurrently": "^7.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jodit": "^3.13.3"
+  }
 }

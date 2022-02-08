@@ -89,8 +89,8 @@ const PostForm = () => {
             </Form.Item>
             <Form.Item>
               <Row justify='end'>
-                <Radio.Group>
-                  <Radio value="private">Private</Radio>
+                <Radio.Group value="public">
+                  <Radio value="private">Private (WIP)</Radio>
                   <Radio value="public">Public</Radio>
                 </Radio.Group>
               </Row>
