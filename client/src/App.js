@@ -40,6 +40,7 @@ const client = new ApolloClient({
 });
 
 function App() {
+
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -82,22 +83,6 @@ function App() {
 
           <Footer style={{ textAlign: 'center' }}>Shao Studio [SS] ©2022 Created by Shao</Footer>
         </Layout>
-
-
-
-        {/* <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/signup">
-              <Signup />
-            </Route>
-            <Route exact path="/me">
-              <Profile />
-            </Route>
-            <Route exact path="/profiles/:username">
-              <Profile />
-            </Route>
-             */}
 
       </Router>
     </ApolloProvider>

@@ -1,22 +1,12 @@
 import React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-
-import PostForm from '../components/PostForm';
+import { QUERY_ME } from '../utils/queries';
 import PostList from '../components/PostList';
-
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import { Spin as Loading, Breadcrumb, Alert } from 'antd';
 
-import Auth from '../utils/auth';
 
 const Profile = () => {
-    // const { userParam } = useParams();
-
     const { loading, data } = useQuery(QUERY_ME);
-
-    // console.log(loading, data);
-    
     const user = data?.me || data?.user || {};
 
     if (loading) {
@@ -38,13 +28,13 @@ const Profile = () => {
                 <Breadcrumb.Item>Profile</Breadcrumb.Item>
             </Breadcrumb>
             <div className="site-layout-content">
-                    {loading ? (
-                        <div style={{ textAlign: 'center' }}><Loading /></div>
-                    ) : (
-                        <div>
-                            <PostList posts={user.posts} />
-                        </div>
-                    )}
+                {loading ? (
+                    <div style={{ textAlign: 'center' }}><Loading /></div>
+                ) : (
+                    <div>
+                        <PostList posts={user.posts} />
+                    </div>
+                )}
             </div>
 
         </main>

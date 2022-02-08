@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 import { ADD_COMMENT } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
+import { Form, Input, Button, Alert, Space, Row, Typography, Divider } from 'antd';
+
+const { Title, Text, Paragraph } = Typography;
+const { TextArea } = Input;
 
 const CommentForm = ({ postId }) => {
-  const [content, setCommentText] = useState('');
+  const [form] = Form.useForm();
+
+  /* eslint-disable no-template-curly-in-string */
+  const validateMessages = {
+    required: '${label} is required!'
+  };
 
   const [addComment, { error }] = useMutation(ADD_COMMENT);
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
+  const handleFormSubmit = async ({ content }) => {
     try {
       const { data } = await addComment({
         variables: {
@@ -23,56 +30,55 @@ const CommentForm = ({ postId }) => {
         },
       });
 
-      setCommentText('');
+      form.resetFields();
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    if (name === 'content') {
-      setCommentText(value);
-    }
-  };
-
   return (
-    <div>
-      <h4>Leave a comment</h4>
+    <div className="site-layout-content">
+      <Divider />
+      <Title level={4} className='primary-color'>Leave a Comment</Title>
 
       {Auth.loggedIn() ? (
         <>
-          <p className={`m-0 ${error ? 'text-danger' : ''}`}          >
-            {error && <span className="ml-2">{error.message}</span>}
-          </p>
-          <form
-            className="flex-row justify-center justify-space-between-md align-center"
-            onSubmit={handleFormSubmit}
+          <Form
+            form={form}
+            layout='vertical'
+            name="nest-messages"
+            onFinish={handleFormSubmit}
+            validateMessages={validateMessages}
           >
-            <div className="col-12 col-lg-9">
-              <textarea
-                name="content"
-                placeholder=""
-                value={content}
-                className="form-input w-100"
-                style={{ lineHeight: '1.5', resize: 'vertical' }}
-                onChange={handleChange}
-              ></textarea>
-            </div>
-
-            <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
-                Add Comment
-              </button>
-            </div>
-          </form>
+            <Form.Item name="content" rules={[{ required: true }]}>
+              <TextArea />
+            </Form.Item>
+            <Form.Item>
+              <Row justify='start'>
+                <Button type="primary" htmlType="submit">Leave Comment</Button>
+              </Row>
+            </Form.Item>
+          </Form>
         </>
       ) : (
-        <p>
-          You need to be logged in to leave a comment. Please{' '}
-          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
-        </p>
+        <div className='warning'>
+          <Alert
+            message="You need to be logged in to leave a comment."
+            type="warning"
+            showIcon
+            action={
+              <Space>
+                <Button size="small" type="ghost">
+                  <Link to="/login">Login</Link>
+                </Button>
+                <Button size="small" type="ghost">
+                  <Link to="/signup">Signup</Link>
+                </Button>
+              </Space>
+            }
+            closable
+          />
+        </div>
       )}
     </div>
   );

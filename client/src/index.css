@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 body {
   font-family: 'Rubik', sans-serif;
 }
@@ -11,6 +13,121 @@ h6 {
   font-family: 'Rubik Mono One', sans-serif;
 }
 
+/* home page */
+.home-banner{
+  width: 100%;
+  height: 90vh;
+  position: relative;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-title{
+  z-index: 10;
+  position: absolute;
+  color:white ;
+  font-weight: bold;
+  font-size: 60px;
+  font-family: 'Ubuntu', sans-serif;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.home-desc{
+  position: absolute;
+  color:rgb(189, 189, 189) ;
+  font-size: 14px;
+  z-index: 10;
+  top: 55%;
+  left: 50%;
+  font-family: 'Ubuntu', sans-serif;
+  transform: translate(-50%, -50%);
+}
+
+.home-btn{
+  z-index: 10;
+  position: absolute; 
+  top: 61%;
+  left: 50%;
+  font-family: 'Ubuntu', sans-serif;
+  transform: translate(-50%, -50%);
+}
+
+/* For homepage background animation */
+/* credit: https://codepen.io/plavookac/pen/QMwObb */
+
+@keyframes move_wave {
+  0% {
+      transform: translateX(0) translateZ(0) scaleY(1)
+  }
+  50% {
+      transform: translateX(-25%) translateZ(0) scaleY(0.55)
+  }
+  100% {
+      transform: translateX(-50%) translateZ(0) scaleY(1)
+  }
+}
+.waveWrapper {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+.waveWrapperInner {
+  position: absolute;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+  background-image: linear-gradient(to top, #376286 20%, #313644 80%);
+}
+.bgTop {
+  z-index: 3;
+  opacity: 0.5;
+}
+.bgMiddle {
+  z-index: 2;
+  opacity: 0.75;
+}
+.bgBottom {
+  z-index: 1;
+}
+.wave {
+  position: absolute;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background-repeat: repeat no-repeat;
+  background-position: 0 bottom;
+  transform-origin: center bottom;
+}
+.waveTop {
+  background-size: 50% 100px;
+}
+.waveAnimation .waveTop {
+animation: move-wave 3s;
+ -webkit-animation: move-wave 3s;
+ -webkit-animation-delay: 1s;
+ animation-delay: 1s;
+}
+.waveMiddle {
+  background-size: 50% 120px;
+}
+.waveAnimation .waveMiddle {
+  animation: move_wave 10s linear infinite;
+}
+.waveBottom {
+  background-size: 50% 100px;
+}
+.waveAnimation .waveBottom {
+  animation: move_wave 15s linear infinite;
+}
+
 .small {
   font-weight: 300;
   font-style: italic;
@@ -21,16 +138,18 @@ h6 {
   padding: 24px;
   background: #fff;
 }
-#components-layout-demo-top .logo {
-  float: left;
-  width: 120px;
-  height: 31px;
-  margin: 16px 24px 16px 0;
-  background: rgba(255, 255, 255, 0.3);
+
+.logo {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  color: white;
+  font-size: 24px;
+  left: 20px;
+  position: absolute;
 }
-.ant-row-rtl #components-layout-demo-top .logo {
-  float: right;
-  margin: 16px 0 16px 24px;
+
+.menu-align{
+  justify-content: center;
 }
 
 .list-item-tyle{
@@ -82,9 +201,48 @@ h6 {
   padding:0px 5px;
 }
 
+.warning-action{
+  display: flex;
+  flex-direction: row;
+}
+
+.warning-action-item{
+  margin: 2px;
+}
+
 /* mobile responsive: tablet */
 
 @media screen and (max-width: 768px){
+  .home-banner{
+    height: 70vh;
+  }
+
+  .logo {
+    font-size: 18px;
+    left: 20px;
+  }
+
+  .home-title{
+    font-size: 40px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .home-desc{
+    top: 45%;
+    left: 50%;
+    font-family: 'Ubuntu', sans-serif;
+    transform: translate(-50%, -50%);
+  }
+  
+  .home-btn{
+    top: 51%;
+    left: 50%;
+    font-family: 'Ubuntu', sans-serif;
+    transform: translate(-50%, -50%);
+  }
+
   .list-item{
     flex-direction: column; 
     flex-wrap:wrap;
@@ -107,12 +265,54 @@ h6 {
     justify-content:flex-start;
   }
 
+  .warning{
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+
+  .warning-content{
+    flex-direction: column;
+  }
+
+}
+
+/* mobile responsive: mobile (small) */
+
+@media screen and (max-width: 600px){
+  .logo {
+    display: none;
+  }
+
 }
 
 /* mobile responsive: mobile (small) */
 
 @media screen and (max-width: 375px){
+  .home-banner{
+    height: 70vh;
+  }
 
+  .home-title{
+    font-size: 40px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .home-desc{
+    top: 46%;
+    left: 50%;
+    font-family: 'Ubuntu', sans-serif;
+    transform: translate(-50%, -50%);
+  }
+  
+  .home-btn{
+    top: 53%;
+    left: 50%;
+    font-family: 'Ubuntu', sans-serif;
+    transform: translate(-50%, -50%);
+  }
+  
   .list-tool{
     flex-wrap: wrap;
   }

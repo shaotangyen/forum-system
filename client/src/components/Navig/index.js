@@ -1,33 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
 import Auth from '../../utils/auth';
+import { Layout, Menu } from 'antd';
 
 const { Header } = Layout;
 
+// export var menuSelected = "home";
+
+// export const updateMenuSelected = (v) => {
+//   console.log(v.key);
+//   menuSelected = v.key;
+// }
+
 const Navig = () => {
-  
+
   //set menu item selected to change the style
   const [itemSelected, setItemSelected] = useState();
-  
+
   const handleClick = (e) => {
     setItemSelected(e.key);
-  }
-
-  const setItem = (v) => { 
-    setItemSelected(v);
   }
 
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
   };
-  
+
   return (
     <Header>
-      <div className="logo" />
-      <Menu theme="dark" onClick={handleClick} selectedKeys={itemSelected} mode="horizontal">
+      <div className="logo">HobbyForm</div>
+      <Menu className='menu-align' theme="dark" onClick={handleClick} selectedKeys={itemSelected} mode="horizontal">
         <Menu.Item key="home"><Link to="/"></Link>Home</Menu.Item>
+        <Menu.Item key="forum" disabled="true"><Link to="/forum">Forum</Link></Menu.Item>
         <Menu.Item key="posts"><Link to="/posts">Posts</Link></Menu.Item>
 
         {Auth.loggedIn() ? (
@@ -38,7 +42,6 @@ const Navig = () => {
         ) : (
           <>
             <Menu.Item key="login"><Link to="/login"> Login</Link></Menu.Item>
-            {/* <Menu.Item key="signup"><Link to="/signup">Signup</Link></Menu.Item> */}
           </>
         )}
       </Menu>

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
@@ -21,7 +21,7 @@ const PostForm = () => {
 
   const editor = useRef(null);
   const [content, setContent] = useState('');
-  console.log(content);
+  // console.log(content);
   //for editor, all options from https://xdsoft.net/jodit/doc/
 
   const [addPost, { error }] = useMutation(ADD_POST, {
@@ -105,18 +105,23 @@ const PostForm = () => {
       ) : (
         <div className='warning'>
           <Alert
+            className='warning-content'
             message="You need to be logged in to make a post."
             type="warning"
             showIcon
             action={
-              <Space>
-                <Button size="small" type="ghost">
-                  <Link to="/login">Login</Link>
-                </Button>
-                <Button size="small" type="ghost">
-                  <Link to="/signup">Signup</Link>
-                </Button>
-              </Space>
+              <div className="warning-action">
+                <div className="warning-action-item">
+                  <Button size="small" type="ghost">
+                    <Link to="/login">Login</Link>
+                  </Button>
+                </div>
+                <div className="warning-action-item">
+                  <Button size="small" type="ghost">
+                    <Link to="/signup">Signup</Link>
+                  </Button>
+                </div>
+              </div>
             }
             closable
           />

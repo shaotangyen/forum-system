@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import CommentForm from '../components/CommentForm';
-
 import { QUERY_SINGLE_POST } from '../utils/queries';
 import { Spin as Loading, Breadcrumb, Typography, Divider, Comment, Tooltip, List } from 'antd';
 
@@ -50,7 +49,7 @@ const SinglePost = () => {
 
       {/* Comment section */}
       <div className="site-layout-content">
-        <Title level={3} className='primary-color'>Comments</Title>
+        <Title level={4} className='primary-color'>Comments</Title>
         <List
           className="comment-list"
           header={`${post.comments.length} replies`}

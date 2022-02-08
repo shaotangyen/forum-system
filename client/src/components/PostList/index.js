@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
 import { useMutation } from '@apollo/client';
 
-import { Typography, List, Space, Avatar } from 'antd';
+import { Typography, List } from 'antd';
 import { UPDATE_POST, REMOVE_POST } from '../../utils/mutations';
 
 import { getTextFromHtml } from "../../utils/plaintextConvert.js";
@@ -11,8 +11,7 @@ import { getTextFromHtml } from "../../utils/plaintextConvert.js";
 const { Text, Title } = Typography;
 
 const PostList = ({ posts }) => {
-  const [removePost] = useMutation(REMOVE_POST, {
-  });
+  const [removePost] = useMutation(REMOVE_POST);
 
   const [updatePost] = useMutation(UPDATE_POST);
 
