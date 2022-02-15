@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 
@@ -45,6 +45,10 @@ const UpdateForm = (props) => {
   };
 
   const [updatePost] = useMutation(UPDATE_POST);
+
+  useEffect(() => {
+    setContent(post.content);
+  }, [post, setContent]);
 
   if (loading) {
     return <div style={{ textAlign: 'center' }}><Loading /></div>;
