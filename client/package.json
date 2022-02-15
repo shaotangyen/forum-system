@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.18.5",
     "bootstrap": "^4.6.1",
+    "draft-js": "^0.11.7",
     "graphql": "^15.8.0",
     "jodit": "^3.13.3",
     "jodit-react": "^1.1.21",

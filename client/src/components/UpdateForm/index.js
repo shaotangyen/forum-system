@@ -26,11 +26,17 @@ const UpdateForm = (props) => {
   console.log("post.title", post.title); //Wwrks
   console.log("post.content", post.content); //works
 
-  const [content, setContent] = useState(post.content);
   // console.log("content",content); For some reason not working
+  const [content, setContent] = useState(post.content);
 
   const config = {
-    readonly: false // all options from https://xdsoft.net/jodit/doc/
+    readonly: false, // all options from https://xdsoft.net/jodit/doc/
+    height: 800
+  };
+
+  const handleUpdate = (event) => {
+    const editorContent = event.target.innerHTML;
+    setContent(editorContent);
   };
 
   /* eslint-disable no-template-curly-in-string */
@@ -43,7 +49,7 @@ const UpdateForm = (props) => {
   if (loading) {
     return <div style={{ textAlign: 'center' }}><Loading /></div>;
   }
-
+  
   const handleFormSubmit = async ({ titleItem, contentItem }) => {
     console.log(titleItem);
     console.log(contentItem);
@@ -62,6 +68,22 @@ const UpdateForm = (props) => {
       console.error(err);
     }
   };
+
+  // const handleFormSubmit = async ({ titleItem, contentItem }) => {
+  //   try {
+  //     await addPost({
+  //       variables: {
+  //         title: titleItem,
+  //         content: contentItem,
+  //         user: Auth.getProfile().data.username,
+  //       },
+  //     });
+  //     //reset all fields in the form
+  //     form.resetFields();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   return (
     <div>
@@ -89,9 +111,12 @@ const UpdateForm = (props) => {
                 value={content} //Not working for some reason
                 config={config}
                 tabIndex={1} // tabIndex of textarea
-                // onBlur={newContent => setContent(newContent)}
-                // onChange={setContent}
-              />
+                onBlur={handleUpdate} // preferred to use only this option to update the content for performance reasons
+                onChange={(newContent) => {}}
+              /><div></div>
+              {/* <textarea>
+                { post.content}
+              </textarea> */}
             </Form.Item>
             <Form.Item>
               <Row justify='end'>
