@@ -28,7 +28,7 @@ const Navig = () => {
 
   return (
     <Header>
-      <div className="logo">HobbyForm</div>
+      <div className="logo">HobbyForum</div>
       <Menu className='menu-align' theme="dark" onClick={handleClick} selectedKeys={itemSelected} mode="horizontal">
         <Menu.Item key="home"><Link to="/"></Link>Home</Menu.Item>
         <Menu.Item key="forum" disabled="true"><Link to="/forum">Forum</Link></Menu.Item>
